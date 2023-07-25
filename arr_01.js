@@ -29,39 +29,38 @@ einer HTML-Seite ausgibt:
 Verwenden Sie dafür die untenstehenden Arrays
 */
 
-const ERR_STR   = "ERROR";
-const COBJ      = {open_o:"<",close_o:"</",close:">"}
-const CONTROLS  = ["<", "</", ">"];
-const TAGS = [  "html",
-				"head","head",
-				"body",
-                "h1","h1",
-                "p","p",
-                "ul",
-                "li","li","li","li","li","li",
-                "ul",
-                "body",
-				"html"
-            ];
+const ERR_STR = "ERROR";
+const COBJ = { open_o: "<", close_o: "</", close: ">" }
+const CONTROLS = ["<", "</", ">"];
+const TAGS = ["html",
+    "head", "head",
+    "body",
+    "h1", "h1",
+    "p", "p",
+    "ul",
+    "li", "li", "li", "li", "li", "li",
+    "ul",
+    "body",
+    "html"
+];
 
 let stack = [];
 
 // Modul: HTML-Synthese | Test
-//output(getHTML());
+// output(getHTML());
 function getHTML() {
-  
+
     let htmlStr = "";
 
     for (let i = 0; i < TAGS.length; i++) {
-        if (isOpenElement(TAGS[i])) 
-        {
-            htmlStr += getElement(TAGS[i],"open");
+        if (isOpenElement(TAGS[i])) {
+            htmlStr += getElement(TAGS[i], "open");
         } else {
-            htmlStr += getElement(TAGS[i],"close");
+            htmlStr += getElement(TAGS[i], "close");
         }
     }
 
-   return htmlStr;
+    return htmlStr;
 }
 
 
@@ -69,12 +68,14 @@ function getHTML() {
 // output(getElement(TAGS[1],"open"));
 // output(getElement(TAGS[1],"close"));
 // output(getElement(TAGS[1]));
-function getElement(tag,op) {
+function getElement(tag, op) {
     switch (op) {
         case "open":
-            return COBJ.open_o + tag + COBJ.close;
+            // return COBJ.open_o + tag + COBJ.close;
+            return CONTROLS[0] + tag + CONTROLS[2];
         case "close":
-            return COBJ.close_o + tag + COBJ.close;
+            // return COBJ.close_o + tag + COBJ.close;
+            return CONTROLS[1] + tag + CONTROLS[2];
         default:
             return ERR_STR;
     }
@@ -85,8 +86,8 @@ function getElement(tag,op) {
 // output(isOpenElement(TAGS[1]));
 // output(isOpenElement(TAGS[2]));
 function isOpenElement(tag) {
-    
-    let cond = (tag != stack[stack.length-1]);
+
+    let cond = (tag != stack[stack.length - 1]);
 
     if (cond) {
         stack.push(tag);
@@ -104,3 +105,14 @@ function isOpenElement(tag) {
 function output(outputData) {
     console.log(outputData);
 }
+
+function currentTime() {
+    const date = new Date();
+    const hour = date.getHours();
+    const minute = date.getMinutes();
+    const seconds = date.getSeconds();
+
+    return `Uhrzeit: ${hour}:${minute}:${seconds}`;
+}
+
+output(currentTime());
